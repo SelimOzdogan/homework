@@ -6,15 +6,15 @@ const boxIt = nameArr => {
         output += drawBottomBorder(1);
     }
     else {
-        let maxStringLength = getlLengthofLongestString(nameArr);
+        let longestStringLength = getlLengthofLongestString(nameArr);
         for (let i = 0; i < nameArr.length; i++) {
             if (i == 0)
-                output += drawTopBorder(maxStringLength) + '\n';
-            output += drawBarsAround(nameArr[i] + ' '.repeat(maxStringLength - nameArr[i].length)) + '\n';
+                output += drawTopBorder(longestStringLength) + '\n';
+            output += drawBarsAround(nameArr[i] + ' '.repeat(longestStringLength - nameArr[i].length)) + '\n';
             if (i == nameArr.length - 1)
-                output += drawBottomBorder(maxStringLength);
+                output += drawBottomBorder(longestStringLength);
             else
-                output += drawMiddleBorder(maxStringLength) + '\n';
+                output += drawMiddleBorder(longestStringLength) + '\n';
         }
     }
     return output;
