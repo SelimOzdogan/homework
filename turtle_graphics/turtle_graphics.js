@@ -2,11 +2,12 @@
 class Turtle {
     #blankSign = '\u25FD';
     #markedSign = '\u25FE';
+
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        this.y = x;
+        this.x = y;
         this.points = [];
-        this.points.push([x, y]);
+        this.points.push([this.x, this.y]);
         this.directionTypes = {
             toRight: 0,
             toDown: 1,
@@ -29,12 +30,18 @@ class Turtle {
         return this;
     }
     forward(count) {
+        this.x = (this.x < 0 ? 0 : this.x);
+        this.y = (this.y < 0 ? 0 : this.y);
         for (let i = 0; i < count; i++) {
             switch (this.direction) {
-                case this.directionTypes.toRight: this.points.push([this.x, ++this.y]); break;
-                case this.directionTypes.toLeft: this.points.push([this.x, --this.y]); break;
-                case this.directionTypes.toDown: this.points.push([++this.x, this.y]); break;
-                case this.directionTypes.toUp: this.points.push([--this.x, this.y]); break;
+                case this.directionTypes.toRight:
+                    this.points.push([this.x, ++this.y]); break;
+                case this.directionTypes.toLeft:
+                    this.points.push([this.x, (--this.y < 0 ? 0 : this.y)]); break;
+                case this.directionTypes.toDown:
+                    this.points.push([++this.x, this.y]); break;
+                case this.directionTypes.toUp:
+                    this.points.push([(--this.x < 0 ? 0 : this.x), this.y]); break;
             }
         }
         return this;
@@ -44,8 +51,8 @@ class Turtle {
     }
     print() {
         let out = [];
-        let maxX = Math.max(...this.points.map(x => x[0])) + 1;
-        let maxY = Math.max(...this.points.map(x => x[1])) + 1;
+        let maxX = Math.max(...this.points.map(x => x[0]));
+        let maxY = Math.max(...this.points.map(x => x[1]));
         for (let i = 0; i <= maxX; i++) {
             for (let j = 0; j <= maxY; j++) {
                 if (out[i] === undefined)
@@ -56,7 +63,12 @@ class Turtle {
             }
         }
         this.points.forEach(element => {
-            out[element[0]][element[1]] = this.#markedSign;
+            try {
+                out[element[0]][element[1]] = this.#markedSign;
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
         let str = '';
         for (let i = 0; i <= maxX; i++) {
@@ -68,19 +80,3 @@ class Turtle {
         console.log(str);
     }
 }
-
-tur = new Turtle(4, 0)
-    .forward(3)
-    .left()
-    .forward(3)
-    .right()
-    .forward(5)
-    .right()
-    .forward(8)
-    .right()
-    .forward(5)
-    .right()
-    .forward(3)
-    .left()
-    .forward(3)
-    .print();
