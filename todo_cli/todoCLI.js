@@ -10,19 +10,20 @@ class TodoCLI {
                 output: process.stdout
             });
         }
-        this.tasks=[];
+        this.tasks = [];
     }
 
     new() {
-        this.menu();
-
+        this.rl.question("What?\n>", answer => {
+            this.tasks.push([answer, 0]);
+            this.menu();
+        });
     }
     view() {
-        for (let i =0; i<this.tasks.length;i++) {
-            console.log(`${i} [✓] ${this.tasks[i]}`)
+        for (let i = 0; i < this.tasks.length; i++) {
+            console.log(`${i} [${(this.tasks[i][1] === 0 ? '' : '✓')}] ${this.tasks[i][0]}`)
         }
         this.menu();
-
     }
     complete() {
         this.menu();
