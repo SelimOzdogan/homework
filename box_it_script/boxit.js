@@ -1,6 +1,6 @@
 const boxIt = nameArr => {
     let output = '';
-    if (nameArr == undefined || nameArr.length < 1) {
+    if (nameArr === undefined || nameArr.length < 1) {
         output += drawTopBorder(1) + '\n';
         output += drawBarsAround(' ') + '\n';
         output += drawBottomBorder(1);
@@ -8,10 +8,10 @@ const boxIt = nameArr => {
     else {
         let longestStringLength = getlLengthofLongestString(nameArr);
         for (let i = 0; i < nameArr.length; i++) {
-            if (i == 0)
+            if (i === 0)
                 output += drawTopBorder(longestStringLength) + '\n';
             output += drawBarsAround(nameArr[i] + ' '.repeat(longestStringLength - nameArr[i].length)) + '\n';
-            if (i == nameArr.length - 1)
+            if (i === nameArr.length - 1)
                 output += drawBottomBorder(longestStringLength);
             else
                 output += drawMiddleBorder(longestStringLength) + '\n';
