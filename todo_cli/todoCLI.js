@@ -10,23 +10,26 @@ class TodoCLI {
                 output: process.stdout
             });
         }
+        this.tasks=[];
     }
 
     new() {
-        this.ask();
+        this.menu();
 
     }
     view() {
-        this.ask();
+        for (let i =0; i<this.tasks.length;i++) {
+            console.log(`${i} [✓] ${this.tasks[i]}`)
+        }
+        this.menu();
 
     }
     complete() {
-        this.ask();
+        this.menu();
 
     }
     delete() {
-        this.ask();
-
+        this.menu();
     }
     quit() {
         console.log("See you soon! 😄");
@@ -34,45 +37,43 @@ class TodoCLI {
     }
     welcome() {
         console.log("Welcome to Todo CLI!\n--------------------");
-        this.ask();
+        this.menu();
     }
     menu() {
-        return "(v) View • ( n ) New • (cX) Complete • (dX) Delete • (q) Quit\n>";
+        this.ask("(v) View • ( n ) New • (cX) Complete • (dX) Delete • (q) Quit\n>");
     }
-    ask() {
-        this.rl.question(this.menu(), answer => {
+    ask(question) {
+        this.rl.question(question, answer => {
             checkProcess(answer);
         });
     }
 }
 
-function checkProcess(answer) {
+function checkProcess(chosen) {
 
     if (cl === undefined) {
         cl = new TodoCLI();
     }
-    switch (answer) {
-        case "w":
-            cl.welcome();
-            cl.ask();
-            break;
-        case "cX": console.log("Complete");
-            cl.ask();
-            break;
-        case "dX": console.log("Delete");
-            cl.ask();
-            break;
-        case "n": console.log("New");
-            cl.ask();
-
-            break;
-        case "q": cl.quit(); break;
-        case "v": console.log("View");
-            cl.ask();
-            break;
-        default:
-            cl.ask();
-            break;
+    if (chosen === undefined) {
+        cl.welcome();
+        cl.menu();
+    }
+    else if (chosen.match("[c][1-9]")) {
+        cl.complete();
+    }
+    else if (chosen.match("[d][1-9]")) {
+        cl.delete();
+    }
+    else if (chosen === "n") {
+        cl.new();
+    } else if (chosen === "v") {
+        cl.view();
+    }
+    else if (chosen === "q") {
+        cl.quit();
+    }
+    else {
+        cl.menu();
     }
 }
 checkProcess("w");
