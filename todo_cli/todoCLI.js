@@ -30,6 +30,7 @@ class TodoCLI {
     }
     complete(number) {
         this.tasks[number][1] = 1;
+        console.log(`Completed "${this.tasks[number][0]}"`);
         this.menu();
     }
     delete() {
