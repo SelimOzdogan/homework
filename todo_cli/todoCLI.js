@@ -63,10 +63,10 @@ function checkProcess(chosen) {
         cl.welcome();
         cl.menu();
     }
-    else if (chosen.match("[c][0-9]")) {
+    else if (chosen.match("^[c][0-9]+")) {
         cl.complete(chosen.slice(1));
     }
-    else if (chosen.match("[d][0-9]")) {
+    else if (chosen.match("^[d][0-9]+")) {
         cl.delete();
     }
     else if (chosen === "n") {
