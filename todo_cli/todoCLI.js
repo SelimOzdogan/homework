@@ -1,5 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
+
+let fileName = process.argv.slice(2);
 let cl;
 
 class TodoCLI {
@@ -9,18 +11,34 @@ class TodoCLI {
                 input: process.stdin,
                 output: process.stdout
             });
+
         }
-        this.tasks = [];
+        if (fileName != undefined && fileName != '' && fs.existsSync("./" + fileName)) {
+            fs.readFile("./" + fileName, (err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                this.tasks = JSON.parse(data);
+            });
+        }
+        else
+            this.tasks = [];
     }
     new() {
         this.rl.question("What?\n>", answer => {
-            this.tasks.push([answer, 0]);
+            this.tasks.push({ completed: false, title: answer });
             this.menu();
         });
     }
     view() {
-        for (let i = 0; i < this.tasks.length; i++) {
-            console.log(`${i} [${(this.tasks[i][1] === 0 ? ' ' : '✓')}] ${this.tasks[i][0]}`)
+        if (this.tasks.length <= 0) {
+            console.log("List is empty...");
+        }
+        else {
+            for (let i = 0; i < this.tasks.length; i++) {
+                console.log(`${i} [${(this.tasks[i].completed ? '✓' : ' ')}] ${this.tasks[i].title}`)
+            }
         }
         this.menu();
     }
@@ -29,8 +47,8 @@ class TodoCLI {
             console.log(`Item "${number}" is not found.`);
         }
         else {
-            this.tasks[number][1] = 1;
-            console.log(`Completed "${this.tasks[number][0]}"`);
+            this.tasks[number].completed = true;
+            console.log(`Completed "${this.tasks[number].title}"`);
         }
         this.menu();
     }
@@ -39,9 +57,18 @@ class TodoCLI {
             console.log(`Item "${number}" is not found.`);
         }
         else {
-            console.log(`Deleted "${this.tasks.splice(number, 1)[0][0]}"`);
+            console.log(`Deleted "${this.tasks.splice(number, 1)[0].title}"`);
         }
         this.menu();
+    }
+    save() {
+        this.rl.question(`Where?${(fileName === undefined ? '' : `(${fileName})`)}\n>`, answer => {
+            if (answer != '' && answer != undefined)
+                fileName = answer;
+            fileName = "./" + fileName;
+            fs.writeFileSync(fileName, JSON.stringify(this.tasks));
+            this.menu();
+        });
     }
     quit() {
         console.log("See you soon! 😄");
@@ -52,7 +79,7 @@ class TodoCLI {
         this.menu();
     }
     menu() {
-        this.ask("(v) View • ( n ) New • (cX) Complete • (dX) Delete • (q) Quit\n>");
+        this.ask("(v) View • ( n ) New • (cX) Complete • (dX) Delete • (s) Save • (q) Quit\n>");
     }
     ask(question) {
         this.rl.question(question, answer => {
@@ -78,6 +105,9 @@ function checkProcess(chosen) {
     }
     else if (chosen === "n") {
         cl.new();
+    }
+    else if (chosen === "s") {
+        cl.save();
     } else if (chosen === "v") {
         cl.view();
     }
