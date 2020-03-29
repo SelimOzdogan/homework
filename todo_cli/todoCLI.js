@@ -25,12 +25,22 @@ class TodoCLI {
         this.menu();
     }
     complete(number) {
-        this.tasks[number][1] = 1;
-        console.log(`Completed "${this.tasks[number][0]}"`);
+        if (number > this.tasks.length - 1) {
+            console.log(`Item "${number}" is not found.`);
+        }
+        else {
+            this.tasks[number][1] = 1;
+            console.log(`Completed "${this.tasks[number][0]}"`);
+        }
         this.menu();
     }
     delete(number) {
-        console.log(`Deleted "${this.tasks.splice(number, 1)[0]}"`);
+        if (number > this.tasks.length - 1) {
+            console.log(`Item "${number}" is not found.`);
+        }
+        else {
+            console.log(`Deleted "${this.tasks.splice(number, 1)[0][0]}"`);
+        }
         this.menu();
     }
     quit() {
