@@ -12,7 +12,10 @@ class TodoCLI {
         }
         this.tasks = [];
     }
-
+    // new1() {
+    //     this.tasks.push(['selim', 0]);
+    //     this.tasks.push(['rukiye', 0]);
+    // }
     new() {
         this.rl.question("What?\n>", answer => {
             this.tasks.push([answer, 0]);
@@ -21,13 +24,13 @@ class TodoCLI {
     }
     view() {
         for (let i = 0; i < this.tasks.length; i++) {
-            console.log(`${i} [${(this.tasks[i][1] === 0 ? '' : '✓')}] ${this.tasks[i][0]}`)
+            console.log(`${i} [${(this.tasks[i][1] === 0 ? ' ' : '✓')}] ${this.tasks[i][0]}`)
         }
         this.menu();
     }
-    complete() {
+    complete(number) {
+        this.tasks[number][1] = 1;
         this.menu();
-
     }
     delete() {
         this.menu();
@@ -59,10 +62,10 @@ function checkProcess(chosen) {
         cl.welcome();
         cl.menu();
     }
-    else if (chosen.match("[c][1-9]")) {
-        cl.complete();
+    else if (chosen.match("[c][0-9]")) {
+        cl.complete(chosen.slice(1));
     }
-    else if (chosen.match("[d][1-9]")) {
+    else if (chosen.match("[d][0-9]")) {
         cl.delete();
     }
     else if (chosen === "n") {
@@ -78,3 +81,11 @@ function checkProcess(chosen) {
     }
 }
 checkProcess("w");
+// const ss= new TodoCLI();
+// ss.view();
+// ss.new1();
+// ss.view();
+// ss.complete(0);
+// ss.view();
+// ss.complete(1);
+// ss.view();
