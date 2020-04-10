@@ -1,0 +1,25 @@
+{
+  "name": "super_team_picker",
+  "version": "1.0.0",
+  "description": "Cohort Team Picker",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "db:create": "createdb --echo team_picker",
+    "db:drop": "dropdb --if-exists --echo team_picker",
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback",
+    "db:reset": "npm run db:drop && npm run db:create && npm run db:migrate"
+  },
+  "author": "Selim OZDOGAN",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "knex": "^0.20.13",
+    "pg": "^8.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
