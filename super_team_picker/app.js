@@ -1,5 +1,15 @@
 const express = require("express");
+const logger = require("morgan");
 const app = express();
+
+app.set("view engine", "ejs");
+app.use(logger("dev"));
+
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+
 
 
 const PORT = 4545;
