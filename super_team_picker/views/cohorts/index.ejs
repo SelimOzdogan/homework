@@ -1,0 +1,18 @@
+<%- include('../partials/header.ejs') %>
+<div class="container">
+    <h1>Cohorts</h1>
+
+    <div class="post-card">
+        <% for(let cohort of cohorts) { %>
+        <div class="card mb-4">
+            <div>
+                <img class="card-img" src="<%= cohort.logoUrl %>">
+                <h5 class="card-title"><%= cohort.name %> </h5>
+            </div>
+                <p class="card-text"><%= cohort.members %> </p>
+                <input type="submit" value="Show cohort"/>
+        </div>
+        <% } %>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
