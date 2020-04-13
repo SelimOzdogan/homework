@@ -10,11 +10,13 @@
                 <div class="method">
                     <h6>Method</h6>
                     <div class="form-group">
-                        <input id="team" type="radio" value="teamCount" name="method">
+                        <input id="team" type="radio" value="teamCount" name="method"
+                            <%= ( request.query.method == "teamCount" ? 'checked' : '' ) %>>
                         <label for="team">Team Count</label>
                     </div>
                     <div class="form-group">
-                        <input id="member" type="radio" value="memberCount" name="method">
+                        <input id="member" type="radio" value="memberCount" name="method"
+                            <%= ( request.query.method == "memberCount" ? 'checked' : '' ) %>>
                         <label for="member">Number Per Team</label>
                     </div>
                     <div class="form-group">
