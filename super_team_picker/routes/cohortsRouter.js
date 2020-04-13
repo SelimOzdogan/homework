@@ -14,16 +14,16 @@ router.get("/", (request, response) => {
 router.post("/", (request, response) => {
     const { name, members, logoUrl } = request.body;
     knex("cohorts")
-      .insert({
-        name,
-        members,
-        logoUrl,
-      })
-      .returning("*")
-      .then((cohort) => {
-        response.redirect(`/cohorts/${cohort[0].id}`);
-      });
-  });
+        .insert({
+            name,
+            members,
+            logoUrl,
+        })
+        .returning("*")
+        .then((cohort) => {
+            response.redirect(`/cohorts/${cohort[0].id}`);
+        });
+});
 router.get("/new", (req, res) => {
     res.render("cohorts/new");
 });
@@ -61,11 +61,17 @@ router.get("/:id", (request, response) => {
         .where("id", id)
         .first()
         .then((cohort) => {
-            console.log(cohort);
             if (cohort) {
-                response.render("cohorts/show", { cohort });
+                // if (!request.query) {
+
+                // response.render("cohorts/show", { cohort });
+                // }
+
+                // else {
+                console.log(cohort);
+                response.render("cohorts/show", { cohort, request });
+                // }
             } else {
-                // response.redirect("cohorts");
                 response.redirect("cohorts/id");
             }
         });
@@ -76,13 +82,29 @@ router.post("/:id", (request, response) => {
         .where("id", id)
         .first()
         .then((cohort) => {
-            console.log(cohort);
             if (cohort) {
-                response.render("cohorts/show", { cohort });
+                response.render("cohorts/show", { cohort, request });
             } else {
                 response.redirect("cohorts");
             }
         });
+});
+router.patch("/:id", (request, response) => {
+    console.log("patch");
+
+    //     response.render("thankYou", {
+    //         fullName,
+    //         favouriteColour,
+    //         message,
+    //       });
+
+
+    //     if (cohort) {
+    //         response.render("cohorts/show", { cohort });
+    //     } else {
+    //         response.redirect("cohorts");
+    //     }
+    // });
 });
 
 module.exports = router;

@@ -6,25 +6,58 @@
             <p class="card-text">
                 <div style="border-bottom: 1px solid silver; padding-bottom: 10px;"><%= cohort.members %></div>
             </p>
-            <form action="/cohorts/<%= cohort.id %>/method" method="POST">
+            <form action="" method="PATCH">
                 <div class="method">
                     <h6>Method</h6>
                     <div class="form-group">
-                        <input id="team" type="radio" value="team" name="method">
+                        <input id="team" type="radio" value="teamCount" name="method">
                         <label for="team">Team Count</label>
                     </div>
                     <div class="form-group">
-                        <input id="member" type="radio" value="member" name="method">
+                        <input id="member" type="radio" value="memberCount" name="method">
                         <label for="member">Number Per Team</label>
                     </div>
                     <div class="form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" name="quantity" />
+                        <input type="text" class="form-control" name="quantity" value="<%= request.query.quantity %>" />
                     </div>
                     <input type="submit" class="btn btn-outline-success" value="Assign Teams" />
                 </div>
             </form>
+            <% if(request.query.method) {%>
+
+            <div class="members">
+                <h5># Members</h5>
+                <% let membersArray = cohort.members.split(",").sort(() => Math.random() - 0.5); %>
+                <% let quantity = request.query.quantity; %>
+                <% let teamCount ;%>
+                <% let teamMembersNumber ;%>
+                <% let teamMembersReaminder =0; %>
+                <% let method = request.query.method; %>
+                <% if( method === "teamCount" ) {%>
+                <% teamCount = quantity; %>
+                <% teamMembersNumber = parseInt(membersArray.length / quantity); %>
+                <% teamMembersReaminder = membersArray.length % quantity; %>
+                <%} else if( method === "memberCount" ) {%>
+                <%  teamMembersNumber = parseInt(quantity); %>
+                <%  teamCount = Math.ceil( membersArray.length / quantity); %>
+                <% teamMembersReaminder = -1; %>
+                <%}%>
+                <% for(let i = 0; i< teamCount;i++) {%>
+                <% if(membersArray.length >= teamMembersNumber) {%>
+                <div style="border-bottom: 1px solid silver; padding-bottom: 10px;">
+                    <%= Array.from({length :teamMembersNumber + (teamMembersReaminder-- > 0 ? 1 : 0 ) }).map(()=> membersArray.pop()); %>
+                </div>
+                <%} else {%>
+                <div style="border-bottom: 1px solid silver; padding-bottom: 10px;">
+                    <%= Array.from({length : membersArray.length  }).map(()=> membersArray.pop()); %>
+                </div>
+                <%}%>
+                <%}%>
+            </div>
+            <%}%>
+
+            </div>
         </div>
     </div>
-</div>
-<%- include('../partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
