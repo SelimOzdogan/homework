@@ -9,7 +9,7 @@ exports.seed = function (knex, Promise) {
         return {
           name: `Cohort ${index++}`,
           members: Array.from({ length: Math.floor(Math.random() * 30) + 5 }).map(() => faker.name.firstName()).join(", "),
-          logoUrl: faker.image.imageUrl()
+          logoUrl: `${faker.image.business()}?random=${Math.floor(Math.random() * 1000000)}`
         };
       });
       return knex("cohorts").insert(cohorts);
