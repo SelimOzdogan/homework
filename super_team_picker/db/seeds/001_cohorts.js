@@ -5,7 +5,7 @@ exports.seed = function (knex, Promise) {
     .del()
     .then(function () {
       let index = 1;
-      const cohorts = Array.from({ length: 100 }).map(() => {
+      const cohorts = Array.from({ length: 20 }).map(() => {
         return {
           name: `Cohort ${index++}`,
           members: Array.from({ length: Math.floor(Math.random() * 30) + 5 }).map(() => faker.name.firstName()).join(", "),

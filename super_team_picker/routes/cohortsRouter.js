@@ -27,9 +27,6 @@ router.post("/", (request, response) => {
 router.get("/new", (req, res) => {
     res.render("cohorts/new");
 });
-// router.get("/lists", (req, res) => {
-//     res.render("cohorts/lists");
-// });
 
 router.get("/edit", (req, res) => {
     res.render("cohorts/edit");
@@ -68,7 +65,8 @@ router.get("/:id", (request, response) => {
             if (cohort) {
                 response.render("cohorts/show", { cohort });
             } else {
-                response.redirect("cohorts");
+                // response.redirect("cohorts");
+                response.redirect("cohorts/id");
             }
         });
 });
