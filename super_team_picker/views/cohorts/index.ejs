@@ -4,14 +4,17 @@
 
     <div class="post-card">
         <% for(let cohort of cohorts) { %>
-        <div class="card mb-4">
-            <div class="cardheader">
-                <img class="card-img float-left" src="<%= cohort.logoUrl %>">
-                <div class="cardname float-left"><%= cohort.name %> </div>
+        <form action="/cohorts/<%= cohort.id %>" method="POST">
+            <input type="hidden" name="_method" value="PATCH" />
+            <div class="card mb-4">
+                <div class="cardheader">
+                    <img class="card-img float-left" src="<%= cohort.logoUrl %>">
+                    <div class="cardname float-left"><%= cohort.name %> </div>
+                </div>
+                <p class="card-text"><%= cohort.members %> </p>
+                <input class="btn btn-primary" type="submit" value="Show cohort" />
             </div>
-            <p class="card-text"><%= cohort.members %> </p>
-            <input class="btn btn-primary" type="submit" value="Show cohort" />
-        </div>
+        </form>
         <% } %>
     </div>
 </div>

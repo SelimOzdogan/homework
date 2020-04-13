@@ -70,5 +70,19 @@ router.get("/:id", (request, response) => {
             }
         });
 });
+router.post("/:id", (request, response) => {
+    const id = request.params.id;
+    knex("cohorts")
+        .where("id", id)
+        .first()
+        .then((cohort) => {
+            console.log(cohort);
+            if (cohort) {
+                response.render("cohorts/show", { cohort });
+            } else {
+                response.redirect("cohorts");
+            }
+        });
+});
 
 module.exports = router;
