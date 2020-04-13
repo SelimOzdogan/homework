@@ -23,13 +23,16 @@
                         <label for="quantity">Quantity</label>
                         <input type="text" class="form-control" name="quantity" value="<%= request.query.quantity %>" />
                     </div>
-                    <input type="submit" class="btn btn-outline-success" value="Assign Teams" />
+                    <input type="submit" class="btn btn-primary showsButton" value="Assign Teams" />
                 </div>
             </form>
             <% if(request.query.method) {%>
 
-            <div class="members">
-                <h5># Members</h5>
+            <div class="membersCard">
+                <div class="membersItem">
+                    <div class="membersItemNumber">#</div>
+                    <div class="membersItemMembers">Members</div>
+                </div>
                 <% let membersArray = cohort.members.split(",").sort(() => Math.random() - 0.5); %>
                 <% let quantity = request.query.quantity; %>
                 <% let teamCount ;%>
@@ -46,18 +49,22 @@
                 <% teamMembersReaminder = -1; %>
                 <%}%>
                 <% for(let i = 0; i< teamCount;i++) {%>
-                <% if(membersArray.length >= teamMembersNumber) {%>
-                <div style="border-bottom: 1px solid silver; padding-bottom: 10px;">
-                    <%= Array.from({length :teamMembersNumber + (teamMembersReaminder-- > 0 ? 1 : 0 ) }).map(()=> membersArray.pop()); %>
-                </div>
-                <%} else {%>
-                <div style="border-bottom: 1px solid silver; padding-bottom: 10px;">
-                    <%= Array.from({length : membersArray.length  }).map(()=> membersArray.pop()); %>
-                </div>
-                <%}%>
-                <%}%>
+                <div class="membersItem">
+                    <div class="membersItemNumber"><%= `${i+1}` %></div>
+
+                    <% if(membersArray.length >= teamMembersNumber) {%>
+                    <div class="membersItemMembers">
+                        <%= Array.from({length :teamMembersNumber + (teamMembersReaminder-- > 0 ? 1 : 0 ) }).map(()=> membersArray.pop()); %>
+                    </div>
+                    <%} else {%>
+                    <div>
+                        <%= Array.from({length : membersArray.length  }).map(()=> membersArray.pop()); %>
+                    </div>
+                    <%}%>
             </div>
-            <%}%>
+                <%}%>
+                </div>
+                <%}%>
 
             </div>
         </div>

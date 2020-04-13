@@ -6,10 +6,17 @@
 .card.mb-4 {
   padding: 12px;
 }
-.card.mb-4 input[type=submit]  {
+.card.mb-4 .indexsButton {
   width: 110px;
   line-height: 14px;
   font-size: 13px;
+}
+.card.mb-4 .showsButton {
+  /* line-height: 14px; */
+  /* font-size: 13px; */
+  color: royalblue;
+  background-color: white;
+  width: 100%;
 }
 .card .cardheader {
   height: 40px;
@@ -25,6 +32,26 @@
   border: none;
 }
 
-.card.body .method input[type=radio] {
-width: 10px;
+.card.body .method input[type="radio"] {
+  width: 10px;
+}
+
+.membersCard {
+  margin-top: 15px;
+}
+.membersItem {
+  border-bottom: 1px solid silver;
+  padding: 10px;
+  display: flex;
+}
+
+.membersCard div:last-of-type {
+    border: none
+  }
+.membersItemNumber {
+  border: none!important;
+  font-weight: bolder;
+}
+.membersItemMembers{
+    padding-left: 20px;
 }
