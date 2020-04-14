@@ -1,3 +1,31 @@
+.welcome {
+    font-size: 38px;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: cursive;
+    color: ghostwhite;
+}
+
+.welcomeMessage {
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: cursive;
+    color: silver;
+    width: 80vw;
+    margin-left: 15vw;
+}
+.bodyHome{
+    background-color: black;
+    height: auto;
+    margin-top: 100px;
+    overflow: auto;
+}
+
 .navigationMenu {
   display: flex;
   justify-content: space-between;
