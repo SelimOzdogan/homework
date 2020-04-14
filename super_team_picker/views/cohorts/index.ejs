@@ -5,7 +5,6 @@
     <div class="post-card">
         <% for(let cohort of cohorts) { %>
         <form action="/cohorts/<%= cohort.id %>" method="POST">
-            <input type="hidden" name="_method" value="PATCH" />
             <div class="card mb-4">
                 <div class="cardheader">
                     <img class="card-img float-left" src="<%= cohort.logoUrl %>">

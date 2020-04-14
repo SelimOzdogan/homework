@@ -2,10 +2,23 @@
 <div class="container">
     <div class="card mb-4">
         <div class="card body">
-            <h5 class="card-title"><%= cohort.name %></h5>
-            <p class="card-text">
-                <div style="border-bottom: 1px solid silver; padding-bottom: 10px;"><%= cohort.members %></div>
-            </p>
+            <div class="cardTop">
+                <h5 class="card-title"><%= cohort.name %></h5>
+                <p class="card-text">
+                    <div><%= cohort.members %></div>
+                </p>
+                <div class="buttonContainer">
+                    <div class="d-flex">
+                        <a href="/cohorts/<%= cohort.id %>/edit" class="btn btn-outline-success mr-2">
+                            Edit
+                        </a>
+                    </div>
+                    <form method="POST" action="/cohorts/<%= cohort.id %>">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="submit" class="btn btn-outline-danger" value="Delete" />
+                    </form>
+                </div>
+            </div>
             <form action="" method="PATCH">
                 <div class="method">
                     <h6>Method</h6>
@@ -57,7 +70,7 @@
                         <%= Array.from({length :teamMembersNumber + (teamMembersReaminder-- > 0 ? 1 : 0 ) }).map(()=> membersArray.pop()); %>
                     </div>
                     <%} else {%>
-                    <div>
+                    <div class="membersItemMembers">
                         <%= Array.from({length : membersArray.length  }).map(()=> membersArray.pop()); %>
                     </div>
                     <%}%>

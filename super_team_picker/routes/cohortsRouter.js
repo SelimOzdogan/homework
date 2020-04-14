@@ -62,15 +62,7 @@ router.get("/:id", (request, response) => {
         .first()
         .then((cohort) => {
             if (cohort) {
-                // if (!request.query) {
-
-                // response.render("cohorts/show", { cohort });
-                // }
-
-                // else {
-                console.log(cohort);
                 response.render("cohorts/show", { cohort, request });
-                // }
             } else {
                 response.redirect("cohorts/id");
             }
@@ -89,22 +81,37 @@ router.post("/:id", (request, response) => {
             }
         });
 });
+router.get("/:id/edit", (request, response) => {
+    knex("cohorts")
+        .where("id", request.params.id)
+        .first()
+        .then((cohort) => {
+            response.render("cohorts/edit", { cohort });
+        });
+});
 router.patch("/:id", (request, response) => {
-    console.log("patch");
+    const { name, members, logoUrl } = request.body;
+    const updatedCohort = {
+        name,
+        members,
+        logoUrl,
+    };
 
-    //     response.render("thankYou", {
-    //         fullName,
-    //         favouriteColour,
-    //         message,
-    //       });
+    knex("cohorts")
+        .where("id", request.params.id)
+        .update(updatedCohort)
+        .then(() => {
+            response.redirect(`/cohorts/${request.params.id}`);
+        });
+});
 
-
-    //     if (cohort) {
-    //         response.render("cohorts/show", { cohort });
-    //     } else {
-    //         response.redirect("cohorts");
-    //     }
-    // });
+router.delete("/:id", (request, response) => {
+    knex("cohorts")
+        .where("id", request.params.id)
+        .del()
+        .then(() => {
+            response.redirect("/cohorts");
+        });
 });
 
 module.exports = router;
