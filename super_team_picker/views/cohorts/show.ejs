@@ -47,37 +47,40 @@
                     <div class="membersItemMembers">Members</div>
                 </div>
                 <% let membersArray = cohort.members.split(",").sort(() => Math.random() - 0.5); %>
-                <% let quantity = request.query.quantity; %>
+                <% let quantity = parseInt(request.query.quantity); %>
                 <% let teamCount ;%>
                 <% let teamMembersNumber ;%>
-                <% let teamMembersReaminder =0; %>
                 <% let method = request.query.method; %>
-                <% if( method === "teamCount" ) {%>
-                <% teamCount = quantity; %>
-                <% teamMembersNumber = parseInt(membersArray.length / quantity); %>
-                <% teamMembersReaminder = membersArray.length % quantity; %>
-                <%} else if( method === "memberCount" ) {%>
-                <%  teamMembersNumber = parseInt(quantity); %>
-                <%  teamCount = Math.ceil( membersArray.length / quantity); %>
-                <% teamMembersReaminder = -1; %>
-                <%}%>
-                <% for(let i = 0; i< teamCount;i++) {%>
-                <div class="membersItem">
-                    <div class="membersItemNumber"><%= `${i+1}` %></div>
+                <% const arr = [] %>
 
-                    <% if(membersArray.length >= teamMembersNumber) {%>
-                    <div class="membersItemMembers">
-                        <%= Array.from({length :teamMembersNumber + (teamMembersReaminder-- > 0 ? 1 : 0 ) }).map(()=> membersArray.pop()); %>
-                    </div>
-                    <%} else {%>
-                    <div class="membersItemMembers">
-                        <%= Array.from({length : membersArray.length  }).map(()=> membersArray.pop()); %>
-                    </div>
-                    <%}%>
-            </div>
-                <%}%>
+                <% if( method === "teamCount" ) {%>
+                <%      teamCount = quantity; %>
+                <%} else if( method === "memberCount" ) {%>
+                <%      teamCount = Math.floor( membersArray.length / quantity); %>
+                <%      teamMembersReaminder = membersArray.length % quantity;%>
+
+                <%      if(teamMembersReaminder >= quantity/2 ) {%>
+                <%          teamCount += 1; %>
+                <%      }%>
+                <% } %>
+
+                <%      teamCount = teamCount === 0 ? 1 : teamCount %>
+                
+                <%      for(let i = 0; membersArray.length > 0; i++) { %>
+                <%          if(i === teamCount) i = 0  %>
+                <%          if(!arr[i]) arr[i]=[] %>
+                <%          arr[i].push(membersArray.pop().trim()) %>
+                <%      } %>
+           
+                <% for(let i = 0; i < teamCount ; i++) {%>
+                <div class="membersItem">
+                    <div class="membersItemNumber"> <%= `${i+1}` %> </div>
+                    <div class="membersItemMembers"> <%= arr[i].join(', ') %> </div>
+                    <% console.log(arr[i]) %>
                 </div>
-                <%}%>
+                <% } %>
+            </div>
+            <%}%>
 
             </div>
         </div>
