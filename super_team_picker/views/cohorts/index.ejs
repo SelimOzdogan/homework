@@ -1,0 +1,20 @@
+<%- include('../partials/header.ejs') %>
+<div class="container">
+    <h1>Cohorts</h1>
+
+    <div class="post-card">
+        <% for(let cohort of cohorts) { %>
+        <form action="/cohorts/<%= cohort.id %>" method="POST">
+            <div class="card mb-4">
+                <div class="cardheader">
+                    <img class="card-img float-left" src="<%= cohort.logoUrl %>">
+                    <div class="cardname float-left"><%= cohort.name %> </div>
+                </div>
+                <p class="card-text"><%= cohort.members %> </p>
+                <input class="btn btn-primary indexsButton" type="submit" value="Show cohort" />
+            </div>
+        </form>
+        <% } %>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
